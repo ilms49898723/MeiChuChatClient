@@ -11,8 +11,8 @@ import org.apache.thrift.transport.TTransport;
 public class Server {
     public Server(String chatip, int chatport, String userip, int userport) {
         ChatService.Client chat = connectChatService(chatip, chatport);
-//        UserService.Client user = connectUserService(userip, userport);
-        UIProcessor.getInstance(chat, null);
+        UserService.Client user = connectUserService(userip, userport);
+        UIProcessor.getInstance(chat, user);
     }
 
     private ChatService.Client connectChatService(String ip, int port) {
