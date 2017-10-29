@@ -20,6 +20,7 @@ public class UIProcessor extends JFrame {
     private JTextArea mChatField;
     private JTextArea mUserField;
     private JTextField mInputField;
+    private String mNickname; 
 
     public static UIProcessor getInstance(ChatService.Client chat, UserService.Client user) {
         return new UIProcessor(chat, user);
@@ -50,6 +51,8 @@ public class UIProcessor extends JFrame {
         mTabbedPane.add("Users", userPanel);
         add(mTabbedPane);
         pack();
+     // Ask for nickname before showing client window
+        mNickname = JOptionPane.showInputDialog("Nickname", "Unknown");
         setVisible(true);
         mInputField.addActionListener((e) -> sendMessage());
         new Thread(this::fetchChatInfo).start();
@@ -61,7 +64,7 @@ public class UIProcessor extends JFrame {
         mInputField.setText("");
         synchronized (mLock) {
             try {
-                mChat.messagePost(new ChatMessage("Anonymous", text, System.currentTimeMillis()/1000));
+                mChat.messagePost(new ChatMessage(mNickname, text, System.currentTimeMillis()/1000));
             } catch (TException e) {
                 e.printStackTrace();
             }
