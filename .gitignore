@@ -28,3 +28,9 @@ hs_err_pid*
 build/
 out/
 /bin/
+
+.classpath
+.project
+.settings/org.eclipse.buildship.core.prefs
+src/main/java/com/github/ilms49898723/meichu/ChatPlatform.java
+
