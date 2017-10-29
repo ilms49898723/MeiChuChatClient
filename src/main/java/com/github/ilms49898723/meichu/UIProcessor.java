@@ -61,7 +61,7 @@ public class UIProcessor extends JFrame {
         mInputField.setText("");
         synchronized (mLock) {
             try {
-                mChat.messagePost(new ChatMessage("Anonymous", text, 1));
+                mChat.messagePost(new ChatMessage("Anonymous", text, System.currentTimeMillis()/1000));
             } catch (TException e) {
                 e.printStackTrace();
             }
@@ -85,11 +85,14 @@ public class UIProcessor extends JFrame {
     }
 
     private void fetchChatInfo() {
+    	//int i = 0;
+    	long startTime = System.currentTimeMillis() / 1000;
+    	//StringBuilder builder = new StringBuilder();
         while (true) {
             try {
                 List<ChatMessage> messages;
                 synchronized (mLock) {
-                    messages = mChat.messageGet(0);
+                    messages = mChat.messageGet(startTime);
                 }
                 StringBuilder builder = new StringBuilder();
                 for (ChatMessage message : messages) {
