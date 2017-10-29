@@ -52,8 +52,8 @@ public class UIProcessor extends JFrame {
         pack();
         setVisible(true);
         mInputField.addActionListener((e) -> sendMessage());
-        new Thread(this::fetchChatInfo).run();
-        new Thread(this::fetchUserInfo).run();
+        new Thread(this::fetchChatInfo).start();
+        new Thread(this::fetchUserInfo).start();
     }
 
     private void sendMessage() {
@@ -72,13 +72,12 @@ public class UIProcessor extends JFrame {
         while (true) {
             try {
                 List<String> userlist = mUser.getUserList();
-                System.out.println(userlist);
                 StringBuilder display = new StringBuilder();
                 for (String user : userlist) {
                     display.append(user).append("\n");
                 }
                 mUserField.setText(display.toString());
-                Thread.sleep(2000);
+                Thread.sleep(3000);
             } catch (TException | InterruptedException e) {
                 e.printStackTrace();
             }
@@ -97,7 +96,7 @@ public class UIProcessor extends JFrame {
                     builder.append("[").append(message.name).append("]: ").append(message.message).append("\n");
                 }
                 mChatField.setText(builder.toString());
-                Thread.sleep(200000);
+                Thread.sleep(1000);
             } catch (TException | InterruptedException e) {
                 e.printStackTrace();
             }
